@@ -1,5 +1,6 @@
 const express = require('express');
 const hotelcontroller = require('../controllers/hotelController.js');
+const reviewRouter = require('./reviewRoutes.js');
 
 const router = express.Router();
 
@@ -16,5 +17,8 @@ router // routes, that search for an id
     .get(hotelcontroller.getHotel)
     .patch(hotelcontroller.updateHotel)
     .delete(hotelcontroller.deleteHotel)
+
+router.use('/:hotelId/reviews', reviewRouter)
+    
 
 module.exports = router;

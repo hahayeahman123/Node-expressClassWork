@@ -1,4 +1,5 @@
 const Hotel = require('./../modules/hotelmodel.js');
+const APIFeatures = require('./../utilities/APItools.js');
 
 /*exports.checkID = (req, res, next, value)=>{ // checks if the added id is valid
     if(req.params.id>hotels.length){
@@ -22,7 +23,12 @@ exports.checkBody = (req, res, next)=>{ // checks if the user wrote all the need
 
 exports.getAllHotels = async(req, res)=>{ // get all the hotels in the hotels.json
     try{
-        const hotels = await Hotel.find();
+        const hotelsData = new APIFeatures(Hotel.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate()
+        const hotels = await hotelsData.query;
         res.status(200).json({
             status: "success",
             results: hotels.length,
@@ -70,18 +76,37 @@ exports.createHotel = async (req, res)=>{
     }
 }
 
-exports.updateHotel = (req, res)=>{
-    res.status(200).json({
-        status: "success",
-        data: {
-            hotel: "Updated"
-        }
-    })
+exports.updateHotel = async (req, res)=>{
+    try{
+        const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body,{
+            new: true,
+            runValidators: true
+        });
+        res.status(200).json({
+            status: "updated",
+            data:{
+                hotel
+            }
+        })
+    }catch(err){
+        res.status(404).json({
+            status: "error",
+            msg: err
+        })
+    }
 }
 
-exports.deleteHotel = (req, res)=>{
-    res.status(204).json({ // 204 means "no content", in this case it got deleted
-        status: "success",
-        data: null
-    })
+exports.deleteHotel = async (req, res)=>{
+    try{
+        await Hotel.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+            status: "deleted succesful",
+            data:null
+        })
+    }catch(err){
+        res.status(404).json({
+            status: "error",
+            msg: err
+        })
+    }
 }

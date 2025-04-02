@@ -18,7 +18,7 @@ exports.getAllReviews = async (req, res)=>{
     }catch(err){
         res.status(404).json({
             status: "failed",
-            msg: err
+            msg: err.message
         })
     }
 }
@@ -37,7 +37,7 @@ exports.createReview = async (req, res)=>{
     }catch(err){
         res.status(404).json({
             status: "failed",
-            msg: err
+            msg: err.message
         })
     }
 }

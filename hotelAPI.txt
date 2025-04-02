@@ -1,1 +1,3 @@
 this exercise is supposed to be a hotel API, think of this file as a description
+added reviews, each one has a hotels id associated to it
+making users, that has authentication and validation

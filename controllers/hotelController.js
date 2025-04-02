@@ -39,7 +39,7 @@ exports.getAllHotels = async(req, res)=>{ // get all the hotels in the hotels.js
     }catch(err){
         res.status(404).json({
             status: "Failed",
-            message: err
+            message: err.message
         })
     }
 }
@@ -56,7 +56,7 @@ exports.getHotel = async(req,res)=>{
     }catch(err){
         res.status(404).json({
             status: "failed",
-            message: err
+            message: err.message
         })
     }
 }
@@ -71,7 +71,7 @@ exports.createHotel = async (req, res)=>{
     }catch(err){
         res.status(400).json({
             status: "failed",
-            message: err
+            message: err.message
         })
     }
 }
@@ -91,7 +91,7 @@ exports.updateHotel = async (req, res)=>{
     }catch(err){
         res.status(404).json({
             status: "error",
-            msg: err
+            msg: err.message
         })
     }
 }
@@ -106,7 +106,7 @@ exports.deleteHotel = async (req, res)=>{
     }catch(err){
         res.status(404).json({
             status: "error",
-            msg: err
+            msg: err.message
         })
     }
 }
